@@ -57,3 +57,26 @@ def test_auroc_interval_brackets_the_estimate():
     scores = np.array([0.1, 0.4, 0.35, 0.8, 0.3, 0.9, 0.7])
     result = auroc_with_ci(labels, scores, rounds=200)
     assert result["ci95"][0] <= result["auroc"] <= result["ci95"][1]
+
+
+def test_calibrated_threshold_uses_only_the_given_scores():
+    import numpy as np
+
+    from inspect_vlm.run import calibrated_threshold
+
+    labels = np.array([0, 0, 0, 1, 1, 1])
+    scores = np.array([0.1, 0.2, 0.3, 0.6, 0.7, 0.8])
+    threshold = calibrated_threshold(labels, scores)
+    assert 0.3 < threshold <= 0.6
+
+
+def test_recall_at_false_alarm_and_decisions():
+    import numpy as np
+
+    from inspect_vlm.run import decision_metrics, recall_at_false_alarm
+
+    labels = np.array([0] * 20 + [1] * 10)
+    scores = np.concatenate([np.linspace(0, 0.5, 20), np.linspace(0.3, 1.0, 10)])
+    assert recall_at_false_alarm(labels, scores, 0.0) <= recall_at_false_alarm(labels, scores, 0.10)
+    metrics = decision_metrics(labels, scores > 0.45)
+    assert set(metrics) == {"accuracy", "defect_recall", "false_alarm_rate"}

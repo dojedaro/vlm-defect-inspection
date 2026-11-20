@@ -70,7 +70,7 @@ class _PatchFeatures(nn.Module):
 def patchcore_scores(
     train_good: Sequence[PILImage.Image],
     test: Sequence[PILImage.Image],
-    bank_fraction: float = 0.1,
+    bank_fraction: float = 1.0,
     seed: int = 0,
     batch: int = 16,
 ) -> np.ndarray:
@@ -83,7 +83,7 @@ def patchcore_scores(
         )
 
     bank = features(list(train_good)).flatten(0, 1)
-    # Random subsampling of the memory bank (PatchCore uses greedy coreset selection).
+    # Full memory bank by default; PatchCore's greedy coreset only makes it smaller and faster.
     generator = torch.Generator().manual_seed(seed)
     keep = torch.randperm(len(bank), generator=generator)[: int(bank_fraction * len(bank))]
     bank = bank[keep.to(bank.device)]
@@ -125,10 +125,9 @@ def finetune_scores(
     for _ in range(epochs):
         net.train()
         for idx in torch.randperm(len(y), generator=generator).split(16):
-            flip = torch.rand(len(idx), generator=generator) < 0.5  # light augmentation
-            batch = torch.where(flip[:, None, None, None], x[idx].flip(-1), x[idx])
+            # No flip augmentation: an upside-down metal nut ("flip") is itself a defect type.
             optimizer.zero_grad()
-            loss_fn(net(batch.to(device)).squeeze(1), y[idx].to(device)).backward()
+            loss_fn(net(x[idx].to(device)).squeeze(1), y[idx].to(device)).backward()
             optimizer.step()
     net.eval()
     with torch.no_grad():
@@ -164,35 +163,48 @@ def vlm_prompt(part: str, with_reference: bool) -> str:
     )
 
 
+VLM_SIZE = 448  # pixels; a multiple of 28, so every image is the same 16x16 = 256 visual tokens
+
+
 class VLMInspector:
     """Scores P("Yes") for the question above with a local Qwen2.5-VL model."""
 
     def __init__(self, model_id: str = VLM_ID):
         from transformers import AutoModelForImageTextToText, AutoProcessor
 
-        self.processor = AutoProcessor.from_pretrained(model_id, max_pixels=448 * 448)
+        self.processor = AutoProcessor.from_pretrained(model_id)
         self.model = AutoModelForImageTextToText.from_pretrained(
-            model_id, dtype=torch.float16, device_map="auto"
+            model_id, dtype=torch.float16, device_map={"": 0}, attn_implementation="sdpa"
         ).eval()
         tok = self.processor.tokenizer
-        self.yes = tok.encode("Yes", add_special_tokens=False)[0]
-        self.no = tok.encode("No", add_special_tokens=False)[0]
+        variants = {"yes": ["Yes", "yes", " Yes"], "no": ["No", "no", " No"]}
+        self.ids = {}
+        for answer, words in variants.items():
+            ids = [tok.encode(w, add_special_tokens=False) for w in words]
+            assert all(len(i) == 1 for i in ids), f"multi-token answer variant: {words}"
+            self.ids[answer] = sorted({i[0] for i in ids})
 
     @torch.no_grad()
     def score(
         self, image: PILImage.Image, part: str, reference: PILImage.Image | None = None
-    ) -> float:
-        content = (
-            [{"type": "image"}] if reference is None else [{"type": "image"}, {"type": "image"}]
-        )
+    ) -> tuple[float, float]:
+        """(P(Yes | Yes or No), P(Yes or No)): the second number shows whether the model was
+        answering the question at all (low mass means it wanted to say something else)."""
+        size = (VLM_SIZE, VLM_SIZE)
+        images = [image.resize(size, PILImage.BICUBIC)]
+        if reference is not None:
+            images.insert(0, reference.resize(size, PILImage.BICUBIC))
+        content = [{"type": "image"} for _ in images]
         content.append({"type": "text", "text": vlm_prompt(part, reference is not None)})
         text = self.processor.apply_chat_template(
             [{"role": "user", "content": content}], add_generation_prompt=True
         )
-        images = [image] if reference is None else [reference, image]
-        inputs = self.processor(text=[text], images=images, return_tensors="pt").to(
-            self.model.device
-        )
-        logits = self.model(**inputs).logits[0, -1].float()
-        two = torch.stack([logits[self.yes], logits[self.no]])
-        return torch.softmax(two, dim=0)[0].item()  # P(Yes | the answer is Yes or No)
+        inputs = self.processor(text=[text], images=images, return_tensors="pt").to(0)
+        logits = self.model(**inputs, logits_to_keep=1).logits[0, -1].float()
+        if not torch.isfinite(logits).all():
+            raise FloatingPointError("non-finite VLM logits; rerun in float32 or bfloat16")
+        logprobs = torch.log_softmax(logits, dim=-1)
+        yes = torch.logsumexp(logprobs[self.ids["yes"]], dim=0)
+        no = torch.logsumexp(logprobs[self.ids["no"]], dim=0)
+        p_yes = torch.softmax(torch.stack([yes, no]), dim=0)[0].item()
+        return p_yes, float(torch.exp(torch.logaddexp(yes, no)))

@@ -19,6 +19,8 @@ import numpy as np
 
 REPO = "Voxel51/mvtec-ad"  # mirror of MVTec AD on the Hugging Face Hub (CC BY-NC-SA 4.0)
 PARTS = ("metal_nut", "screw", "transistor")
+# (defect-free training images, test images) per part in MVTec AD; checked at load time.
+EXPECTED_COUNTS = {"metal_nut": (220, 115), "screw": (320, 160), "transistor": (213, 100)}
 
 
 @dataclass(frozen=True)
