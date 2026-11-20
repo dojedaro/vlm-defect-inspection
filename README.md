@@ -1,6 +1,6 @@
 # Defect inspection: anomaly detection vs. transfer learning vs. a vision-language model
 
-**On real factory images from MVTec AD (metal nuts, screws, transistors), a PatchCore-style anomaly detector that learns only from good parts reaches a mean AUROC of 0.974. A ResNet-18 fine-tuned on 10 labeled images reaches 0.834, and the vision-language model Qwen2.5-VL-3B, asked "is this part defective?", reaches 0.751. Showing it a good reference image doesn't help (0.734).** At its default threshold, the VLM calls every part fine. For visual inspection on a production line, the classical detector is the tool; a small general VLM is not, at least without adaptation.
+**On real factory images from MVTec AD (metal nuts, screws, transistors), a PatchCore-style anomaly detector that learns only from good parts reaches a mean AUROC of 0.974. A ResNet-18 fine-tuned on 10 labeled images reaches 0.834, and the vision-language model Qwen2.5-VL-3B, asked "is this part defective?", reaches 0.751. Showing it a good reference image doesn't help (0.734).** At its default threshold, the VLM calls every part fine. On these three parts, the PatchCore-style detector is clearly the better detector; this small VLM, with one generic prompt, is not competitive.
 
 [![CI](https://github.com/dojedaro/vlm-defect-inspection/actions/workflows/ci.yml/badge.svg)](https://github.com/dojedaro/vlm-defect-inspection/actions/workflows/ci.yml)
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/dojedaro/vlm-defect-inspection/blob/main/notebooks/run_experiment.ipynb)
@@ -29,18 +29,18 @@ Evaluation images per seed: metal nut 105 (88 defective), screw 150 (114), trans
 | ResNet-18 fine-tuned | 76.5% | 36.3% | 54.3% |
 | Qwen2.5-VL-3B, zero-shot | 43.6% | 47.1% | 56.2% |
 
-- **The VLM never says "Yes" on its own.** It puts at least 98.7% of its probability on "Yes" or
+- **The VLM never says "Yes" on its own.** It puts about 99% of its probability (at least 98.6%) on "Yes" or
   "No", so it is answering the question, but P(Yes) never reaches 0.5 (the highest is 0.49). At the natural 0.5 threshold
-  it flags 0% of defective parts. Calibrating the threshold on the same 10 labeled images the ResNet
-  uses lifts its defect recall to 36–65%, with 4–33% false alarms.
+  it flags 0% of defective parts. Calibrating the zero-shot threshold on the same 10 labeled images the
+  ResNet uses lifts its defect recall to 36–65%, with 4–33% false alarms.
 - **It sees obvious damage, not subtle geometry.** By defect type, the zero-shot VLM separates a
   damaged transistor case almost perfectly (AUROC 0.98) but is at chance on bent transistor leads
   (0.47) and upside-down metal nuts (0.54). PatchCore scores 0.87–1.00 on every defect type.
-- **Labels are not the bottleneck; the right prior is.** PatchCore uses no defect labels at all and
-  wins everywhere. Fine-tuning a classifier on 5 defect examples is noisy (± 0.11 on screws) because
+- **A model of what "good" looks like beat a classifier trained on defects.** PatchCore uses no defect
+  labels and wins on all three parts. Fine-tuning a classifier on 5 defect examples is noisy (± 0.11 on screws) because
   5 examples cannot cover 4–5 defect types.
 - **Cost on a free Colab T4:** the VLM takes 0.3 s per image; PatchCore builds its memory bank and
-  scores a part's whole test set in 25–48 s; each ResNet fine-tune takes about 5 s.
+  scores a part's whole test set in 25–48 s; each ResNet fine-tune takes 4–5 s.
 
 ## Where a VLM does fit
 
