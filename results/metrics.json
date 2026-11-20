@@ -1,0 +1,784 @@
+{
+  "k_labeled_per_class": 5,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "parts": {
+    "metal_nut": {
+      "n_eval_per_seed": 105,
+      "n_defective_eval": 88,
+      "n_train_good": 220,
+      "methods": {
+        "patchcore": {
+          "auroc_mean": 0.9955,
+          "auroc_std": 0.0004,
+          "per_seed": [
+            {
+              "auroc": 0.9953,
+              "ci95": [
+                0.9853,
+                1.0
+              ],
+              "recall_at_5pct_false_alarms": 0.9659,
+              "recall_at_10pct_false_alarms": 0.9773,
+              "auroc_by_defect_type": {
+                "bent": 1.0,
+                "color": 0.9893,
+                "flip": 1.0,
+                "scratch": 0.992
+              }
+            },
+            {
+              "auroc": 0.9953,
+              "ci95": [
+                0.9853,
+                1.0
+              ],
+              "recall_at_5pct_false_alarms": 0.9659,
+              "recall_at_10pct_false_alarms": 0.9773,
+              "auroc_by_defect_type": {
+                "bent": 1.0,
+                "color": 0.9888,
+                "flip": 1.0,
+                "scratch": 0.992
+              }
+            },
+            {
+              "auroc": 0.996,
+              "ci95": [
+                0.9866,
+                1.0
+              ],
+              "recall_at_5pct_false_alarms": 0.9659,
+              "recall_at_10pct_false_alarms": 0.9773,
+              "auroc_by_defect_type": {
+                "bent": 1.0,
+                "color": 0.992,
+                "flip": 1.0,
+                "scratch": 0.9912
+              }
+            }
+          ],
+          "recall_at_5pct_false_alarms_mean": 0.9659,
+          "recall_at_10pct_false_alarms_mean": 0.9773
+        },
+        "finetuned_resnet18": {
+          "auroc_mean": 0.9053,
+          "auroc_std": 0.0406,
+          "per_seed": [
+            {
+              "auroc": 0.9091,
+              "ci95": [
+                0.8496,
+                0.9572
+              ],
+              "recall_at_5pct_false_alarms": 0.7614,
+              "recall_at_10pct_false_alarms": 0.7955,
+              "auroc_by_defect_type": {
+                "bent": 0.9386,
+                "color": 0.754,
+                "flip": 1.0,
+                "scratch": 0.9465
+              }
+            },
+            {
+              "auroc": 0.9439,
+              "ci95": [
+                0.8944,
+                0.9833
+              ],
+              "recall_at_5pct_false_alarms": 0.75,
+              "recall_at_10pct_false_alarms": 0.8523,
+              "auroc_by_defect_type": {
+                "bent": 0.9565,
+                "color": 0.8627,
+                "flip": 1.0,
+                "scratch": 0.9519
+              }
+            },
+            {
+              "auroc": 0.863,
+              "ci95": [
+                0.7707,
+                0.9318
+              ],
+              "recall_at_5pct_false_alarms": 0.5114,
+              "recall_at_10pct_false_alarms": 0.6477,
+              "auroc_by_defect_type": {
+                "bent": 0.8133,
+                "color": 0.7219,
+                "flip": 0.9949,
+                "scratch": 0.9235
+              }
+            }
+          ],
+          "recall_at_5pct_false_alarms_mean": 0.6743,
+          "recall_at_10pct_false_alarms_mean": 0.7652
+        },
+        "vlm_zero_shot": {
+          "auroc_mean": 0.7429,
+          "auroc_std": 0.0235,
+          "per_seed": [
+            {
+              "auroc": 0.7687,
+              "ci95": [
+                0.6718,
+                0.8556
+              ],
+              "recall_at_5pct_false_alarms": 0.5682,
+              "recall_at_10pct_false_alarms": 0.6136,
+              "auroc_by_defect_type": {
+                "bent": 0.89,
+                "color": 0.8663,
+                "flip": 0.5714,
+                "scratch": 0.7326
+              }
+            },
+            {
+              "auroc": 0.7373,
+              "ci95": [
+                0.6223,
+                0.8389
+              ],
+              "recall_at_5pct_false_alarms": 0.3409,
+              "recall_at_10pct_false_alarms": 0.3409,
+              "auroc_by_defect_type": {
+                "bent": 0.8645,
+                "color": 0.8347,
+                "flip": 0.5374,
+                "scratch": 0.7112
+              }
+            },
+            {
+              "auroc": 0.7226,
+              "ci95": [
+                0.6043,
+                0.8202
+              ],
+              "recall_at_5pct_false_alarms": 0.3523,
+              "recall_at_10pct_false_alarms": 0.3523,
+              "auroc_by_defect_type": {
+                "bent": 0.8363,
+                "color": 0.8235,
+                "flip": 0.509,
+                "scratch": 0.7265
+              }
+            }
+          ],
+          "recall_at_5pct_false_alarms_mean": 0.4205,
+          "recall_at_10pct_false_alarms_mean": 0.4356
+        },
+        "vlm_with_reference": {
+          "auroc_mean": 0.7602,
+          "auroc_std": 0.0356,
+          "per_seed": [
+            {
+              "auroc": 0.7975,
+              "ci95": [
+                0.6791,
+                0.9024
+              ],
+              "recall_at_5pct_false_alarms": 0.4091,
+              "recall_at_10pct_false_alarms": 0.4773,
+              "auroc_by_defect_type": {
+                "bent": 0.7033,
+                "color": 0.8717,
+                "flip": 0.8067,
+                "scratch": 0.8128
+              }
+            },
+            {
+              "auroc": 0.7266,
+              "ci95": [
+                0.625,
+                0.8195
+              ],
+              "recall_at_5pct_false_alarms": 0.6136,
+              "recall_at_10pct_false_alarms": 0.6136,
+              "auroc_by_defect_type": {
+                "bent": 0.5601,
+                "color": 0.8487,
+                "flip": 0.8449,
+                "scratch": 0.6658
+              }
+            },
+            {
+              "auroc": 0.7564,
+              "ci95": [
+                0.6216,
+                0.871
+              ],
+              "recall_at_5pct_false_alarms": 0.1591,
+              "recall_at_10pct_false_alarms": 0.25,
+              "auroc_by_defect_type": {
+                "bent": 0.6407,
+                "color": 0.869,
+                "flip": 0.798,
+                "scratch": 0.7176
+              }
+            }
+          ],
+          "recall_at_5pct_false_alarms_mean": 0.3939,
+          "recall_at_10pct_false_alarms_mean": 0.447
+        }
+      },
+      "decisions": {
+        "vlm_zero_shot_at_0.5": {
+          "accuracy": 0.1619,
+          "defect_recall": 0.0,
+          "false_alarm_rate": 0.0
+        },
+        "vlm_zero_shot_shot_calibrated": {
+          "accuracy": 0.6508,
+          "defect_recall": 0.6477,
+          "false_alarm_rate": 0.3333
+        },
+        "vlm_with_reference_at_0.5": {
+          "accuracy": 0.819,
+          "defect_recall": 0.9356,
+          "false_alarm_rate": 0.7843
+        },
+        "vlm_with_reference_shot_calibrated": {
+          "accuracy": 0.6508,
+          "defect_recall": 0.6212,
+          "false_alarm_rate": 0.1961
+        }
+      },
+      "timing_seconds": {
+        "patchcore_total": 31.871,
+        "finetune_seed0": 4.585,
+        "finetune_seed1": 3.764,
+        "finetune_seed2": 3.974,
+        "vlm_per_image": 0.313
+      }
+    },
+    "screw": {
+      "n_eval_per_seed": 150,
+      "n_defective_eval": 114,
+      "n_train_good": 320,
+      "methods": {
+        "patchcore": {
+          "auroc_mean": 0.9308,
+          "auroc_std": 0.0025,
+          "per_seed": [
+            {
+              "auroc": 0.9337,
+              "ci95": [
+                0.8689,
+                0.9805
+              ],
+              "recall_at_5pct_false_alarms": 0.4561,
+              "recall_at_10pct_false_alarms": 0.8596,
+              "auroc_by_defect_type": {
+                "manipulated_front": 0.9022,
+                "scratch_head": 0.9444,
+                "scratch_neck": 0.9873,
+                "thread_side": 0.8775,
+                "thread_top": 0.9529
+              }
+            },
+            {
+              "auroc": 0.9291,
+              "ci95": [
+                0.866,
+                0.9751
+              ],
+              "recall_at_5pct_false_alarms": 0.4386,
+              "recall_at_10pct_false_alarms": 0.8158,
+              "auroc_by_defect_type": {
+                "manipulated_front": 0.9028,
+                "scratch_head": 0.9387,
+                "scratch_neck": 0.9843,
+                "thread_side": 0.8696,
+                "thread_top": 0.9495
+              }
+            },
+            {
+              "auroc": 0.9296,
+              "ci95": [
+                0.8674,
+                0.9744
+              ],
+              "recall_at_5pct_false_alarms": 0.4649,
+              "recall_at_10pct_false_alarms": 0.8246,
+              "auroc_by_defect_type": {
+                "manipulated_front": 0.8981,
+                "scratch_head": 0.9363,
+                "scratch_neck": 0.9884,
+                "thread_side": 0.8687,
+                "thread_top": 0.9481
+              }
+            }
+          ],
+          "recall_at_5pct_false_alarms_mean": 0.4532,
+          "recall_at_10pct_false_alarms_mean": 0.8333
+        },
+        "finetuned_resnet18": {
+          "auroc_mean": 0.7608,
+          "auroc_std": 0.1109,
+          "per_seed": [
+            {
+              "auroc": 0.8482,
+              "ci95": [
+                0.7697,
+                0.9176
+              ],
+              "recall_at_5pct_false_alarms": 0.3772,
+              "recall_at_10pct_false_alarms": 0.5,
+              "auroc_by_defect_type": {
+                "manipulated_front": 0.7995,
+                "scratch_head": 0.8939,
+                "scratch_neck": 0.8403,
+                "thread_side": 0.8801,
+                "thread_top": 0.8309
+              }
+            },
+            {
+              "auroc": 0.7982,
+              "ci95": [
+                0.7078,
+                0.8767
+              ],
+              "recall_at_5pct_false_alarms": 0.2018,
+              "recall_at_10pct_false_alarms": 0.3596,
+              "auroc_by_defect_type": {
+                "manipulated_front": 0.6629,
+                "scratch_head": 0.8009,
+                "scratch_neck": 0.8539,
+                "thread_side": 0.8647,
+                "thread_top": 0.803
+              }
+            },
+            {
+              "auroc": 0.636,
+              "ci95": [
+                0.5273,
+                0.7376
+              ],
+              "recall_at_5pct_false_alarms": 0.0877,
+              "recall_at_10pct_false_alarms": 0.2281,
+              "auroc_by_defect_type": {
+                "manipulated_front": 0.631,
+                "scratch_head": 0.6296,
+                "scratch_neck": 0.6424,
+                "thread_side": 0.6225,
+                "thread_top": 0.6534
+              }
+            }
+          ],
+          "recall_at_5pct_false_alarms_mean": 0.2222,
+          "recall_at_10pct_false_alarms_mean": 0.3626
+        },
+        "vlm_zero_shot": {
+          "auroc_mean": 0.7765,
+          "auroc_std": 0.0123,
+          "per_seed": [
+            {
+              "auroc": 0.7647,
+              "ci95": [
+                0.6858,
+                0.8389
+              ],
+              "recall_at_5pct_false_alarms": 0.3947,
+              "recall_at_10pct_false_alarms": 0.4561,
+              "auroc_by_defect_type": {
+                "manipulated_front": 0.8092,
+                "scratch_head": 0.7412,
+                "scratch_neck": 0.9039,
+                "thread_side": 0.6477,
+                "thread_top": 0.7095
+              }
+            },
+            {
+              "auroc": 0.7755,
+              "ci95": [
+                0.6957,
+                0.8443
+              ],
+              "recall_at_5pct_false_alarms": 0.4211,
+              "recall_at_10pct_false_alarms": 0.4825,
+              "auroc_by_defect_type": {
+                "manipulated_front": 0.8232,
+                "scratch_head": 0.7697,
+                "scratch_neck": 0.9058,
+                "thread_side": 0.6715,
+                "thread_top": 0.7064
+              }
+            },
+            {
+              "auroc": 0.7892,
+              "ci95": [
+                0.7149,
+                0.8614
+              ],
+              "recall_at_5pct_false_alarms": 0.4123,
+              "recall_at_10pct_false_alarms": 0.4737,
+              "auroc_by_defect_type": {
+                "manipulated_front": 0.8267,
+                "scratch_head": 0.7812,
+                "scratch_neck": 0.9155,
+                "thread_side": 0.6869,
+                "thread_top": 0.7295
+              }
+            }
+          ],
+          "recall_at_5pct_false_alarms_mean": 0.4094,
+          "recall_at_10pct_false_alarms_mean": 0.4708
+        },
+        "vlm_with_reference": {
+          "auroc_mean": 0.7128,
+          "auroc_std": 0.0417,
+          "per_seed": [
+            {
+              "auroc": 0.6874,
+              "ci95": [
+                0.5836,
+                0.7839
+              ],
+              "recall_at_5pct_false_alarms": 0.1667,
+              "recall_at_10pct_false_alarms": 0.2982,
+              "auroc_by_defect_type": {
+                "manipulated_front": 0.628,
+                "scratch_head": 0.6578,
+                "scratch_neck": 0.8588,
+                "thread_side": 0.5871,
+                "thread_top": 0.692
+              }
+            },
+            {
+              "auroc": 0.6901,
+              "ci95": [
+                0.5823,
+                0.7919
+              ],
+              "recall_at_5pct_false_alarms": 0.1579,
+              "recall_at_10pct_false_alarms": 0.193,
+              "auroc_by_defect_type": {
+                "manipulated_front": 0.6149,
+                "scratch_head": 0.662,
+                "scratch_neck": 0.7862,
+                "thread_side": 0.6401,
+                "thread_top": 0.7475
+              }
+            },
+            {
+              "auroc": 0.761,
+              "ci95": [
+                0.6728,
+                0.8477
+              ],
+              "recall_at_5pct_false_alarms": 0.2719,
+              "recall_at_10pct_false_alarms": 0.3158,
+              "auroc_by_defect_type": {
+                "manipulated_front": 0.7156,
+                "scratch_head": 0.7315,
+                "scratch_neck": 0.8565,
+                "thread_side": 0.6856,
+                "thread_top": 0.8056
+              }
+            }
+          ],
+          "recall_at_5pct_false_alarms_mean": 0.1988,
+          "recall_at_10pct_false_alarms_mean": 0.269
+        }
+      },
+      "decisions": {
+        "vlm_zero_shot_at_0.5": {
+          "accuracy": 0.24,
+          "defect_recall": 0.0,
+          "false_alarm_rate": 0.0
+        },
+        "vlm_zero_shot_shot_calibrated": {
+          "accuracy": 0.52,
+          "defect_recall": 0.383,
+          "false_alarm_rate": 0.0463
+        },
+        "vlm_with_reference_at_0.5": {
+          "accuracy": 0.2489,
+          "defect_recall": 0.0117,
+          "false_alarm_rate": 0.0
+        },
+        "vlm_with_reference_shot_calibrated": {
+          "accuracy": 0.6578,
+          "defect_recall": 0.6608,
+          "false_alarm_rate": 0.3519
+        }
+      },
+      "timing_seconds": {
+        "patchcore_total": 47.64,
+        "finetune_seed0": 4.657,
+        "finetune_seed1": 4.736,
+        "finetune_seed2": 4.436,
+        "vlm_per_image": 0.297
+      }
+    },
+    "transistor": {
+      "n_eval_per_seed": 90,
+      "n_defective_eval": 35,
+      "n_train_good": 213,
+      "methods": {
+        "patchcore": {
+          "auroc_mean": 0.9945,
+          "auroc_std": 0.0003,
+          "per_seed": [
+            {
+              "auroc": 0.9943,
+              "ci95": [
+                0.9818,
+                1.0
+              ],
+              "recall_at_5pct_false_alarms": 0.9714,
+              "recall_at_10pct_false_alarms": 1.0,
+              "auroc_by_defect_type": {
+                "bent_lead": 0.998,
+                "cut_lead": 0.9955,
+                "damaged_case": 0.996,
+                "misplaced": 0.9879
+              }
+            },
+            {
+              "auroc": 0.9943,
+              "ci95": [
+                0.9818,
+                1.0
+              ],
+              "recall_at_5pct_false_alarms": 0.9714,
+              "recall_at_10pct_false_alarms": 1.0,
+              "auroc_by_defect_type": {
+                "bent_lead": 0.998,
+                "cut_lead": 0.996,
+                "damaged_case": 0.9955,
+                "misplaced": 0.9879
+              }
+            },
+            {
+              "auroc": 0.9948,
+              "ci95": [
+                0.9834,
+                1.0
+              ],
+              "recall_at_5pct_false_alarms": 1.0,
+              "recall_at_10pct_false_alarms": 1.0,
+              "auroc_by_defect_type": {
+                "bent_lead": 0.9977,
+                "cut_lead": 0.9955,
+                "damaged_case": 0.9964,
+                "misplaced": 0.9899
+              }
+            }
+          ],
+          "recall_at_5pct_false_alarms_mean": 0.9809,
+          "recall_at_10pct_false_alarms_mean": 1.0
+        },
+        "finetuned_resnet18": {
+          "auroc_mean": 0.8362,
+          "auroc_std": 0.043,
+          "per_seed": [
+            {
+              "auroc": 0.8743,
+              "ci95": [
+                0.8005,
+                0.9361
+              ],
+              "recall_at_5pct_false_alarms": 0.4571,
+              "recall_at_10pct_false_alarms": 0.5429,
+              "auroc_by_defect_type": {
+                "bent_lead": 0.7919,
+                "cut_lead": 0.7886,
+                "damaged_case": 0.9071,
+                "misplaced": 1.0
+              }
+            },
+            {
+              "auroc": 0.7896,
+              "ci95": [
+                0.6935,
+                0.8706
+              ],
+              "recall_at_5pct_false_alarms": 0.2857,
+              "recall_at_10pct_false_alarms": 0.4857,
+              "auroc_by_defect_type": {
+                "bent_lead": 0.6727,
+                "cut_lead": 0.7879,
+                "damaged_case": 0.7864,
+                "misplaced": 0.9111
+              }
+            },
+            {
+              "auroc": 0.8447,
+              "ci95": [
+                0.7496,
+                0.9247
+              ],
+              "recall_at_5pct_false_alarms": 0.4857,
+              "recall_at_10pct_false_alarms": 0.6,
+              "auroc_by_defect_type": {
+                "bent_lead": 0.8091,
+                "cut_lead": 0.8727,
+                "damaged_case": 0.7436,
+                "misplaced": 0.9636
+              }
+            }
+          ],
+          "recall_at_5pct_false_alarms_mean": 0.4095,
+          "recall_at_10pct_false_alarms_mean": 0.5429
+        },
+        "vlm_zero_shot": {
+          "auroc_mean": 0.7323,
+          "auroc_std": 0.0182,
+          "per_seed": [
+            {
+              "auroc": 0.746,
+              "ci95": [
+                0.627,
+                0.8582
+              ],
+              "recall_at_5pct_false_alarms": 0.4286,
+              "recall_at_10pct_false_alarms": 0.6,
+              "auroc_by_defect_type": {
+                "bent_lead": 0.5111,
+                "cut_lead": 0.8159,
+                "damaged_case": 0.9758,
+                "misplaced": 0.6889
+              }
+            },
+            {
+              "auroc": 0.7117,
+              "ci95": [
+                0.5881,
+                0.8265
+              ],
+              "recall_at_5pct_false_alarms": 0.3429,
+              "recall_at_10pct_false_alarms": 0.5143,
+              "auroc_by_defect_type": {
+                "bent_lead": 0.4343,
+                "cut_lead": 0.7717,
+                "damaged_case": 0.975,
+                "misplaced": 0.6949
+              }
+            },
+            {
+              "auroc": 0.7392,
+              "ci95": [
+                0.6182,
+                0.8452
+              ],
+              "recall_at_5pct_false_alarms": 0.4571,
+              "recall_at_10pct_false_alarms": 0.5714,
+              "auroc_by_defect_type": {
+                "bent_lead": 0.4545,
+                "cut_lead": 0.7773,
+                "damaged_case": 0.98,
+                "misplaced": 0.6909
+              }
+            }
+          ],
+          "recall_at_5pct_false_alarms_mean": 0.4095,
+          "recall_at_10pct_false_alarms_mean": 0.5619
+        },
+        "vlm_with_reference": {
+          "auroc_mean": 0.7282,
+          "auroc_std": 0.0203,
+          "per_seed": [
+            {
+              "auroc": 0.7491,
+              "ci95": [
+                0.6337,
+                0.8592
+              ],
+              "recall_at_5pct_false_alarms": 0.2571,
+              "recall_at_10pct_false_alarms": 0.5429,
+              "auroc_by_defect_type": {
+                "bent_lead": 0.6,
+                "cut_lead": 0.6659,
+                "damaged_case": 0.9596,
+                "misplaced": 0.7616
+              }
+            },
+            {
+              "auroc": 0.7268,
+              "ci95": [
+                0.5958,
+                0.841
+              ],
+              "recall_at_5pct_false_alarms": 0.4,
+              "recall_at_10pct_false_alarms": 0.4286,
+              "auroc_by_defect_type": {
+                "bent_lead": 0.5778,
+                "cut_lead": 0.6303,
+                "damaged_case": 0.9773,
+                "misplaced": 0.7495
+              }
+            },
+            {
+              "auroc": 0.7086,
+              "ci95": [
+                0.586,
+                0.826
+              ],
+              "recall_at_5pct_false_alarms": 0.4286,
+              "recall_at_10pct_false_alarms": 0.4857,
+              "auroc_by_defect_type": {
+                "bent_lead": 0.5659,
+                "cut_lead": 0.5364,
+                "damaged_case": 0.9455,
+                "misplaced": 0.7253
+              }
+            }
+          ],
+          "recall_at_5pct_false_alarms_mean": 0.3619,
+          "recall_at_10pct_false_alarms_mean": 0.4857
+        }
+      },
+      "decisions": {
+        "vlm_zero_shot_at_0.5": {
+          "accuracy": 0.6111,
+          "defect_recall": 0.0,
+          "false_alarm_rate": 0.0
+        },
+        "vlm_zero_shot_shot_calibrated": {
+          "accuracy": 0.7296,
+          "defect_recall": 0.3619,
+          "false_alarm_rate": 0.0364
+        },
+        "vlm_with_reference_at_0.5": {
+          "accuracy": 0.6852,
+          "defect_recall": 0.219,
+          "false_alarm_rate": 0.0182
+        },
+        "vlm_with_reference_shot_calibrated": {
+          "accuracy": 0.6074,
+          "defect_recall": 0.4667,
+          "false_alarm_rate": 0.303
+        }
+      },
+      "timing_seconds": {
+        "patchcore_total": 24.626,
+        "finetune_seed0": 4.045,
+        "finetune_seed1": 4.051,
+        "finetune_seed2": 4.525,
+        "vlm_per_image": 0.31
+      }
+    }
+  },
+  "mean_auroc_over_parts": {
+    "patchcore": 0.9736,
+    "finetuned_resnet18": 0.8341,
+    "vlm_zero_shot": 0.7506,
+    "vlm_with_reference": 0.7337
+  },
+  "vlm": "Qwen/Qwen2.5-VL-3B-Instruct",
+  "vlm_reference_images": {
+    "metal_nut_seed0": "data/data_10/100-4.png",
+    "screw_seed0": "data/data_42/054-14.png",
+    "transistor_seed0": "data/data_0/099.png",
+    "metal_nut_seed1": "data/data_11/208-4.png",
+    "screw_seed1": "data/data_44/155-12.png",
+    "transistor_seed1": "data/data_1/192.png",
+    "metal_nut_seed2": "data/data_11/080-4.png",
+    "screw_seed2": "data/data_43/093-12.png",
+    "transistor_seed2": "data/data_1/054.png"
+  }
+}
