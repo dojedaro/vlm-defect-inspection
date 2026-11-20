@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "inspect-vlm"
+version = "0.1.0"
+description = "Industrial defect inspection on MVTec AD: PatchCore-style anomaly detection vs. CNN transfer learning vs. a vision-language model."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24", "pandas>=2.0", "scikit-learn>=1.3", "pillow>=10", "matplotlib>=3.7", "huggingface_hub>=0.24"]
+
+[project.optional-dependencies]
+gpu = ["torch>=2.3", "torchvision>=0.18", "transformers>=4.49", "accelerate>=0.34"]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
