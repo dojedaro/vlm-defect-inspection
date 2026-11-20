@@ -68,6 +68,9 @@ def split_part(images: list[Image], part: str, k: int, seed: int) -> PartSplit:
 def load(root: Path, parts: tuple[str, ...] = PARTS, k: int = 5, seed: int = 0) -> list[PartSplit]:
     """Download the metadata and the needed images (about 1,500 PNGs) and split each part."""
     from huggingface_hub import hf_hub_download, snapshot_download
+    from huggingface_hub.utils import disable_progress_bars
+
+    disable_progress_bars()  # one bar per image (about 1,500) floods and freezes notebook output
 
     meta = hf_hub_download(REPO, "samples.json", repo_type="dataset", local_dir=root)
     images = parse_samples(json.loads(Path(meta).read_text())["samples"], parts)
