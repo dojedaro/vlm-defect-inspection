@@ -28,6 +28,7 @@ Evaluation images per seed: metal nut 105 (88 defective), screw 150 (114), trans
 | PatchCore-style | **97.7%** | **83.3%** | **100%** |
 | ResNet-18 fine-tuned | 76.5% | 36.3% | 54.3% |
 | Qwen2.5-VL-3B, zero-shot | 43.6% | 47.1% | 56.2% |
+| Qwen2.5-VL-3B + good reference | 44.7% | 26.9% | 48.6% |
 
 - **The VLM never says "Yes" on its own.** It puts about 99% of its probability (at least 98.6%) on "Yes" or
   "No", so it is answering the question, but P(Yes) never reaches 0.5 (the highest is 0.49). At the natural 0.5 threshold
