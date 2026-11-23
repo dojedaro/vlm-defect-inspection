@@ -66,11 +66,13 @@ trains on; nothing is tuned on evaluation images.
 
 ```mermaid
 flowchart LR
-    M[MVTec AD<br/>metal nut, screw, transistor] --> S[Per seed: hold back 5 good +<br/>5 defective test images]
-    S --> P[PatchCore-style<br/>good training images only]
-    S --> F[ResNet-18 fine-tune<br/>on the 10 held-back + 40 good]
-    S --> V[Qwen2.5-VL-3B<br/>P&#40;Yes&#41; to 'is it defective?']
-    P & F & V --> E[Same evaluation images:<br/>AUROC, recall at fixed false alarms,<br/>per defect type]
+    M["MVTec AD<br/>metal nut, screw, transistor"] --> S["Per seed: hold back 5 good +<br/>5 defective test images"]
+    S --> P["PatchCore-style<br/>good training images only"]
+    S --> F["ResNet-18 fine-tune<br/>on the 10 held-back + 40 good"]
+    S --> V["Qwen2.5-VL-3B<br/>P(Yes) to 'is it defective?'"]
+    P --> E["Same evaluation images:<br/>AUROC, recall at fixed false alarms,<br/>per defect type"]
+    F --> E
+    V --> E
 ```
 
 - [`data.py`](src/inspect_vlm/data.py): downloads only the needed images from a Hugging Face mirror
